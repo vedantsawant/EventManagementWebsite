@@ -7,6 +7,19 @@
     padding-top: 70px;
   }
 
+  /* Template features */
+
+  .circle{
+    width: 150px;
+    height: 150px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+
+  .card-image{
+    width: 300px;
+    height: 200px;
+  }
+  
 
   /*---------------------------------------
      TYPOGRAPHY              
