@@ -9,6 +9,12 @@
 
   /* Template features */
 
+
+  .body-name{
+    font-size: 210%;
+    padding-left: 50px;
+    font-weight: 700;
+  }
   .circle{
     width: 150px;
     height: 150px;
