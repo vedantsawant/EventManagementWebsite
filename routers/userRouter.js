@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/userauth");
 
-router.post("/", async (req, res) => {
+router.post("/register", async (req, res) => {
     try {
         const {email, first_name,last_name, classs , password, passwordVerify} = req.body;
         console.log(req.body);
@@ -60,6 +60,7 @@ router.post("/", async (req, res) => {
 
 router.post("/login",async (req,res) => {
     try {
+        console.log("Log attempt");
         const {email, password} = req.body;
         //validate
         if(!email || !password)
@@ -77,6 +78,7 @@ router.post("/login",async (req,res) => {
         const token = jwt.sign({
             user: existingUser._id
         },process.env.JWT_SECRET);
+        console.log("Logged in");
 
         res.cookie("token",token,{
             httpOnly:true,
@@ -92,7 +94,7 @@ router.post("/login",async (req,res) => {
 });
 
 
-router.post("/tokenIsValid", async (req, res)=>{
+router.get("/tokenIsValid", async (req, res)=>{
     try{
         const token = req.cookies.token;
         if(!token) return res.json(false);

@@ -47,4 +47,7 @@ app.use("/society",require("./routers/societyRouter"));
 app.use("/event",require("./routers/eventRouter"));
 app.get("/login",(req,res)=>{
     res.render(__dirname + "/views/login.html")
-})
+});
+app.get("/home", (req,res)=>{
+    res.render(__dirname + "/views/index.html")
+});

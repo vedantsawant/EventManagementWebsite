@@ -106,7 +106,7 @@ $(document).ready(function() {
 		var password = $('#password').val();
 		if(fname!="" && lname!="" && email!="" && classs!="" && password!="" ){
 			$.ajax({
-				url: "http://localhost:3000/auth/",
+				url: "http://localhost:3000/auth/register",
 				type: "POST",
 				data: {
 					"email":email,
@@ -144,20 +144,19 @@ $(document).ready(function() {
 		var password = $('#password_log').val();
 		if(email!="" && password!="" ){
 			$.ajax({
-				url: "http://localhost:3000",
+				url: "http://localhost:3000/auth/login",
 				type: "POST",
 				data: {
-					type:2,
-					email: email,
-					password: password						
+					"email": email,
+					"password": password						
 				},
 				cache: false,
-				success: function(dataResult){
-					var dataResult = JSON.parse(dataResult);
-					if(dataResult.statusCode==200){
-						location.href = "index.html";						
+				success: function(output, status, xhr){
+					//var dataResult = JSON.parse(dataResult);
+					if(xhr.status==200){
+						location.href = "http://localhost:3000/home";						
 					}
-					else if(dataResult.statusCode==201){
+					else if(xhr.status==400){
 						$("#error").show();
 						$('#error').html('Invalid Email or Password !');
 					}
