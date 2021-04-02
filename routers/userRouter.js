@@ -7,6 +7,7 @@ const auth = require("../middleware/userauth");
 router.post("/", async (req, res) => {
     try {
         const {email, first_name,last_name, classs , password, passwordVerify} = req.body;
+        console.log(req.body);
 
         // validation
         
