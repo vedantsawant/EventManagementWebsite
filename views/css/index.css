@@ -15,6 +15,12 @@
     padding-left: 50px;
     font-weight: 700;
   }
+
+  .body-name2{
+    font-size: 210%;
+    font-weight: 700;
+  }
+  
   .circle{
     width: 150px;
     height: 150px;
