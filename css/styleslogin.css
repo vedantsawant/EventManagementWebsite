@@ -1,0 +1,77 @@
+body{
+    background-color: #dbf4ec;
+}
+.btn{
+    background-color: #4ecca3;
+    margin-left: 0.625rem;
+}
+.btn:hover,.btn:active,.btn:checked{
+    background-color:#46b792 ;
+}
+.btn-tab{
+    background: none;
+    border: none;
+    color: #4ecca3;
+    font-family: "Montserrat", sans-serif;
+    font-size: x-large;
+}
+.btn-tab:hover{
+    background: none;
+}
+.login-container{
+    width: 100%;
+    justify-content: left;
+}
+.login_form{
+    text-align: left;
+    padding: 3.125rem;
+}
+.title1{
+    font-family: "Montserrat", sans-serif;
+    color: #393e46;
+    text-transform: uppercase;
+    letter-spacing: 0.1875rem;
+    word-spacing: 0.3125rem;
+    text-align: center;
+    padding: 1.5625rem;
+    width: 100%;
+}
+.row{
+    margin:5rem 15rem;
+    border-radius: 1rem;
+    background-color:white;
+    padding: 1rem;
+    box-shadow: 0.25rem 0.25rem gray;
+}
+.form-container{
+    text-align: left;
+    padding: 3.125rem;
+}
+
+.login-image{
+    height: 60rem;
+}
+.img-col{
+    text-align: center;
+    padding: 0;
+}
+.form-tabs{
+    text-align: center;
+    padding: 0.625rem;
+}
+.form-col{
+    text-align: left;
+    border-radius: 1rem;
+    background-color:#eeeeee;
+}
+.form-group{
+    padding: 0.625rem;
+}
+.forgot-pass{
+    font-family: "Montserrat", sans-serif;
+    text-align: center;
+    padding-top: 1rem;
+}
+#login_form{
+    margin: 8rem 0;
+}
