@@ -7,18 +7,20 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 var path = require("path");
 const bodyParser = require("body-parser");
+const multer = require('multer');
 dotenv.config();
 
 
 //set up server
 
 const app = express();
-
+var upload = multer();
 const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname,'views')));
 app.engine('html', require('ejs').renderFile);
 app.listen(PORT,()=> console.log(`Server start at port: ${PORT}`));
-
+app.use(upload.array()); 
+app.use(express.static('public'));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(cookieParser());
@@ -50,4 +52,7 @@ app.get("/login",(req,res)=>{
 });
 app.get("/home", (req,res)=>{
     res.render(__dirname + "/views/index.html")
+});
+app.get("/regevent", (req,res)=>{
+    res.render(__dirname + "/views/event-form.html")
 });

@@ -58,7 +58,7 @@ router.post("/addmember", async (req, res) => {
         let society = await Society.findById(societyid);
         if(!society) return res.json("no society");
         
-        user.societies.push(uid);
+        user.societies.push(societyid);
         
         society.staff.push({
             "uid":uid,"post":post

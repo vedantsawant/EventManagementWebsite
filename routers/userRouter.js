@@ -2,6 +2,7 @@ const router = require("express").Router();
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Society = require("../models/sbodyModel");
 const auth = require("../middleware/userauth");
 
 router.post("/register", async (req, res) => {
@@ -123,6 +124,48 @@ router.get("/tokenIsValid", async (req, res)=>{
                     classs:user.classs,
                     societies:user.societies,
                 }});
+        }
+
+
+
+    }
+    catch(err){
+        res.status(500).json({error: err.message});
+    }
+});
+router.get("/getallsbody", async (req, res)=>{
+    try{
+        
+        const token = req.cookies.token;
+        if(!token) return res.json(false);
+        
+        const verified = jwt.verify(token,process.env.JWT_SECRET);
+        if(!verified) return res.json(false);
+        
+        const user = await User.findById(verified.user);
+        if(!user) return res.json(false);
+        
+        if(user.societies.length === 0){
+            return res.json(false);
+        }else{
+            societies =[];
+            
+            for(var i =0;i<user.societies.length;i++){
+                
+                let society = await Society.findById(user.societies[i]);
+                
+                
+                if(society){
+                    societyvar ={
+                        "id":user.societies[i], "name":society.sbodyname
+                    };
+                    societies.push(societyvar);
+                }
+            }
+            
+            return res.json({
+                societies: societies
+            });
         }
 
 
