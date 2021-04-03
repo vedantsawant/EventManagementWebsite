@@ -12,6 +12,9 @@ const eventSchema = new mongoose.Schema({
         ref: 'user',
         required:true
     }],
+    approved: {type: Number, default: 0},
+    productImageName:{type:String,default:"none",required:true},
+    productImageData: {type:String,required:true},
 });
 
 const Event = mongoose.model("event",eventSchema);

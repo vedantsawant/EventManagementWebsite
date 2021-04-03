@@ -104,14 +104,28 @@ router.get("/tokenIsValid", async (req, res)=>{
         
         const user = await User.findById(verified.user);
         if(!user) return res.json(false);
-    
-        return res.json({
-            user: {
-                email : user.email,
-                first_name : user.first_name,
-                last_name:user.last_name,
-                classs:user.classs,
-            }});
+        
+        if(user.societies.length === 0){
+            return res.json({
+                user: {
+                    email : user.email,
+                    first_name : user.first_name,
+                    last_name:user.last_name,
+                    classs:user.classs,
+                    
+                }});
+        }else{
+            return res.json({
+                user: {
+                    email : user.email,
+                    first_name : user.first_name,
+                    last_name:user.last_name,
+                    classs:user.classs,
+                    societies:user.societies,
+                }});
+        }
+
+
 
     }
     catch(err){

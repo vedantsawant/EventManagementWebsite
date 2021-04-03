@@ -5,6 +5,10 @@ const userSchema = new mongoose.Schema({
     first_name: {type: String,required:true},
     last_name: {type: String,required:true},
     classs: {type: String,required:true},
+    societies: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'society'
+    }],
     passwordHash: {type: String, required: true},
 });
 
