@@ -51,3 +51,10 @@ app.get("/login",(req,res)=>{
 app.get("/home", (req,res)=>{
     res.render(__dirname + "/views/index.html")
 });
+app.get("/society", (req,res)=> {
+    res.render(__dirname + "/views/society.html")
+});
+// app.get("/councils", (req,res)=> {
+//     res.render(__dirname + "/views/councils.html")
+// });
+
