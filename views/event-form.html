@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Booking Form</title>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600&display=swap&subset=latin-ext" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<link type="text/css" rel="stylesheet" href="css\bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="css\stylesform.css" />
+
+
+</head>
+
+<body>
+	<div id="booking" class="section">
+		<div class="section-center">
+			<div class="container">
+				<div class="row">
+					<div class="booking-form">
+						<div class="form-header">
+							<h1>Add An Event</h1>
+						</div>
+						<form method="POST"  action="">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<span class="form-label">Event Name</span>
+										<input class="form-control" id="event-name" name="event-name" type="text" placeholder="Enter event name" required>
+									</div>
+								</div>
+								<div class="col-sm-6">
+							<div class="form-group">
+							<span class="form-label">Description</span>
+							 <input class="form-control" id="description" name="description" type="text" placeholder="Enter event description" required>	
+							</div>
+						</div>
+
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+							<div class="form-group">
+								<span class="form-label">Body type:</span>
+								<select id="body-type" name="body-type">
+								<option value="" disabled selected>Choose your option</option>
+									<option value="Council">Council</option>
+									<option value="Society">Society</option>
+									<option value="Department">Department</option>
+									<option value="Institute">Institute</option>
+								</select>
+							</div>
+							</div>
+							<div class="col-sm-6">
+									<div class="form-group">
+										<span class="form-label">Body Name:</span>
+										<input class="form-control" id="body-name" name="body-name" type="text" placeholder="Enter name of body" required>
+									</div>
+								</div>
+						</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<span class="form-label">Form Date</span>
+										<input class="form-control" id="form-date" name="form-date" type="date" required>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<span class="form-label">Event Date</span>
+										<input class="form-control" id="event-date" name="event-date" type="date" required>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+										<div class="form-group">
+											<span class="form-label">Venue</span>
+											<input class="form-control" name="venue" id="venue" placeholder="Enter the venue" type="text" required>
+										</div>
+									</div>
+
+						       <div class="col-sm-6">
+									<div class="form-group">
+										<span class="form-label">Upload Poster</span>
+								        <input class="form-control" name="poster" id="poster" type="file" id="img" name="img" accept="image/*" >
+										
+									</div>
+								</div>
+						   
+							<br><br>
+							<div class="col-sm-12">
+							<div class="form-group">
+							
+		                    <div style="margin-top:1.5rem; margin-left:1.5rem; margin-right:1.5rem;"class="form-btn text-center">
+								<input type="submit" id= "submit" name="submit" class="submit-btn">
+								
+							</div>
+						
+					    </div>
+				    </div>
+			    </div>
+            </form>
+		    </div>
+	    </div>
+    </body>
+
+</html>
