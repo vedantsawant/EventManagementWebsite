@@ -3,7 +3,7 @@
 <head>
 	<title>Login Page</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/styleslogin.css">
+	<link rel="stylesheet" type="text/css" href="/css/styleslogin.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600&display=swap&subset=latin-ext" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -33,27 +33,20 @@
 
 					<form id="register_form" name="form1" method="post">
 							<div class="form-group">
-							<label for="email">Name:</label>
-							<input type="text" class="form-control" id="name" placeholder="Name" name="name">
+							<label for="email">First Name:</label>
+							<input type="text" class="form-control" id="fname" placeholder="First Name" name="fname">
+						</div>
+						<div class="form-group">
+							<label for="pwd">Last Name:</label>
+							<input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname">
 						</div>
 						<div class="form-group">
 							<label for="pwd">Email:</label>
 							<input type="email" class="form-control" id="email" placeholder="Email" name="email">
 						</div>
-						<div class="form-group">
-							<label for="pwd">Phone:</label>
-							<input type="text" class="form-control" id="phone" placeholder="Phone" name="phone">
-						</div>
 						<div class="form-group" >
-							<label for="pwd">City:</label>
-							<select name="city" id="city" class="form-control">
-								<option value="">Select</option>
-								<option value="Chennai">Chennai</option>
-								<option value="Delhi">Delhi</option>
-								<option value="Hyderabad">Hyderabad</option>
-								<option value="Mumbai">Mumbai</option>
-								<option value="Pune">Pune</option>
-							</select>
+							<label for="pwd">Class:</label>
+							<input type="text" class="form-control" id="classs" placeholder="Class" name="classs">
 						</div>
 						<div class="form-group">
 							<label for="pwd">Password:</label>
@@ -106,74 +99,75 @@ $(document).ready(function() {
 	});
 	$('#butsave').on('click', function() {
 		$("#butsave").attr("disabled", "disabled");
-		var name = $('#name').val();
+		var fname = $('#fname').val();
+		var lname = $('#lname').val();
 		var email = $('#email').val();
-		var phone = $('#phone').val();
-		var city = $('#city').val();
+		var classs = $('#classs').val();
 		var password = $('#password').val();
-		if(name!="" && email!="" && phone!="" && password!="" ){
-			// $.ajax({
-			// 	url: "",
-			// 	type: "POST",
-			// 	data: {
-			// 		type: 1,
-			// 		name: name,
-			// 		email: email,
-			// 		phone: phone,
-			// 		city: city,
-			// 		password: password						
-			// 	},
-			// 	cache: false,
-			// 	success: function(dataResult){
-			// 		var dataResult = JSON.parse(dataResult);
-			// 		if(dataResult.statusCode==200){
-			// 			$("#butsave").removeAttr("disabled");
-			// 			$('#register_form').find('input:text').val('');
-			// 			$("#success").show();
-			// 			$('#success').html('Registration successful !'); 						
-			// 		}
-			// 		else if(dataResult.statusCode==201){
-			// 			$("#error").show();
-			// 			$('#error').html('Email ID already exists !');
-			// 		}
+		if(fname!="" && lname!="" && email!="" && classs!="" && password!="" ){
+			$.ajax({
+				url: "http://localhost:3000/auth/register",
+				type: "POST",
+				data: {
+					"email":email,
+					"first_name":fname,
+					"last_name":lname,
+					"classs":classs,
+					"password": password,
+					"passwordVerify": password
+				},
+				
+				cache: false,
+				success: function(output, status, xhr){
+					//var dataResult = JSON.parse(dataResult);
+					//console.log(xhr.status);
+					if(xhr.status==200){
+						$("#butsave").removeAttr("disabled");
+						$('#register_form').find('input:text').val('');
+						$("#success").show();
+						$('#success').html('Registration successful !'); 						
+					}
+					else if(xhr.status==400){
+						$("#error").show();
+						$('#error').html('Email ID already exists !');
+					}
 					
-			// 	}
-			// });
+				}
+			});
 		}
 		else{
 			alert('Please fill all the fields !');
 		}
 	});
-	// $('#butlogin').on('click', function() {
-	// 	var email = $('#email_log').val();
-	// 	var password = $('#password_log').val();
-	// 	if(email!="" && password!="" ){
-	// 		$.ajax({
-	// 			url: "",
-	// 			type: "POST",
-	// 			data: {
-	// 				type:2,
-	// 				email: email,
-	// 				password: password						
-	// 			},
-	// 			cache: false,
-	// 			success: function(dataResult){
-	// 				var dataResult = JSON.parse(dataResult);
-	// 				if(dataResult.statusCode==200){
-	// 					location.href = "index.php";						
-	// 				}
-	// 				else if(dataResult.statusCode==201){
-	// 					$("#error").show();
-	// 					$('#error').html('Invalid Email or Password !');
-	// 				}
+	$('#butlogin').on('click', function() {
+		var email = $('#email_log').val();
+		var password = $('#password_log').val();
+		if(email!="" && password!="" ){
+			$.ajax({
+				url: "http://localhost:3000/auth/login",
+				type: "POST",
+				data: {
+					"email": email,
+					"password": password						
+				},
+				cache: false,
+				success: function(output, status, xhr){
+					//var dataResult = JSON.parse(dataResult);
+					if(xhr.status==200){
+						location.href = "http://localhost:3000/home";						
+					}
+					else if(xhr.status==400){
+						$("#error").show();
+						$('#error').html('Invalid Email or Password !');
+					}
 					
-	// 			}
-	// 		});
-	// 	}
-	// 	else{
-	// 		alert('Please fill all the field !');
-	// 	}
-	// });
+				}
+			});
+		}
+		else{
+			alert('Please fill all the field !');
+		}
+	});
 });
 </script>
 
