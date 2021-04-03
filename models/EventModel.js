@@ -6,11 +6,12 @@ const eventSchema = new mongoose.Schema({
         ref: 'society',
         required:true
     },
+    date: {type: Date, required: true},
     description: {type: String, required: true},
     registered: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
-        required:true
+        ref: 'user'
+        
     }],
     approved: {type: Number, default: 0},
     productImageName:{type:String,default:"none",required:true},

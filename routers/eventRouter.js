@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Society = require("../models/societyModel");
+const Society = require("../models/sbodyModel");
 const User = require("../models/userModel");
 const Event = require("../models/EventModel");
 const jwt = require("jsonwebtoken");
@@ -34,7 +34,7 @@ const upload = multer({
 router.route("/add").post(upload.single('imageData'),async (req,res,next)=>{
 
     try {
-        const {societyid, description,registered} = req.body;
+        const {societyid, description,registered,date} = req.body;
         const token = req.cookies.token;
         const imageName=req.body.imageName;
         var imageData = req.file.path;
@@ -63,10 +63,10 @@ router.route("/add").post(upload.single('imageData'),async (req,res,next)=>{
             return res.json("no valid user");
         }
 
-        if(!societyid || !description || !registered || !imageName ||! imageData)
+        if(!societyid || !description || !registered || !imageName ||! imageData ||! date)
             return res.status(400).json({errorMessage:"Please Enter all Required fields"});
         const newEvent = new Event({
-            societyid, description,registered
+            societyid, date,description,registered
         });
         const savedEvent = await newEvent.save();
         res.status(200).send("done");
