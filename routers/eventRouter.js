@@ -31,13 +31,15 @@ const upload = multer({
 });
 
 
-router.route("/add").post(upload.single('imageData'),async (req,res,next)=>{
+router.route("/add").post(upload.single('poster'),async (req,res,next)=>{
 
     try {
-        const {societyid, description,registered,date} = req.body;
+        const {eventname, description,sbodyid,eventdate,venue,postername,poster} = req.body;
+        
         const token = req.cookies.token;
-        const imageName=req.body.imageName;
-        var imageData = req.file.path;
+        
+        
+        
         if(!token) return res.json("no token");
         
         const verified = jwt.verify(token,process.env.JWT_SECRET);
@@ -46,27 +48,31 @@ router.route("/add").post(upload.single('imageData'),async (req,res,next)=>{
         const user = await User.findById(verified.user);
         if(!user) return res.json("no user");
         
-        let society = await Society.findById(societyid);
+        let society = await Society.findById(sbodyid);
         
         
         var validuser =0
         if(!society){
             return res.json("no scoiety");
         }
-        
+        console.log(society);
         for (var i = 0;i<society.staff.length;i++){
-            if(society.staff[i].uid === user._id){
+            console.log(society.staff[i].uid === user._id);
+            console.log(String(society.staff[i].uid));
+            if(String(society.staff[i].uid) === String(user._id)){
+                console.log("here");
                 validuser = 1;
             }
         }
+        console.log(validuser);
         if(validuser===0){
             return res.json("no valid user");
         }
 
-        if(!societyid || !description || !registered || !imageName ||! imageData ||! date)
+        if(!sbodyid || !description || !eventname ||! eventdate ||! venue)
             return res.status(400).json({errorMessage:"Please Enter all Required fields"});
         const newEvent = new Event({
-            societyid, date,description,registered
+            sbodyid, eventdate,eventname,description,venue,postername,poster
         });
         const savedEvent = await newEvent.save();
         res.status(200).send("done");
