@@ -126,7 +126,7 @@
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                         <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+                         <li><a href="user_dashboard.html"><i class="fa fa-user"></i> <span id ="profile-name">Profile</span></a></li>
                     </ul>
                </div>
 
@@ -933,6 +933,16 @@
      <script src="js/owl.carousel.min.js"></script>
      <script src="js/smoothscroll.js"></script>
      <script src="js/custom.js"></script>
+     <script> 
+          $.ajax({
+				url: "http://localhost:3000/auth/tokenIsValid",
+				type: "GET",
+				cache: false,
+				success: function(output, status, xhr){
+                         document.getElementById("profile-name").innerHTML = xhr.responseJSON.user.first_name;
+                    }
+          });
+     </script>
 
 </body>
 </html>
