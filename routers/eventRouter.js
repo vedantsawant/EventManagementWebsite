@@ -88,11 +88,16 @@ router.route("/add").post(async (req,res,next)=>{
 
 router.get("/getall", async (req, res) => {
     try {
-
-        Event.find({}).then(function (events) {
-            console.log(events);
-            res.send(events);
-        });
+        var events = await Event.find({});
+        for (var i = 0;i<events.length;i++){
+            sid = events[i].sbodyid;
+            let society = await Society.findById(sid);
+            events[i]["societyname"] = society.sbodyname;
+            events[i]["type"] = society.type;
+            
+        }
+        
+        res.send(events);
 
         
 

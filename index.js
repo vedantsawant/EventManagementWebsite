@@ -45,7 +45,7 @@ mongoose.connect(process.env.MDB_CONNECT,{
 //set routes
 
 app.use("/auth",require("./routers/userRouter"));
-app.use("/society",require("./routers/societyRouter"));
+app.use("/societyrouter",require("./routers/societyRouter"));
 app.use("/event",require("./routers/eventRouter"));
 app.get("/login",(req,res)=>{
     res.render(__dirname + "/views/login.html")
