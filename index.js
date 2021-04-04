@@ -59,7 +59,10 @@ app.get("/society", (req,res)=> {
 app.get("/regevent", (req,res)=> {
     res.render(__dirname + "/views/event-form.html")
 });
-// app.get("/councils", (req,res)=> {
-//     res.render(__dirname + "/views/councils.html")
-// });
+app.get("/councils", (req,res)=> {
+    res.render(__dirname + "/views/councils.html")
+});
+app.get("/department", (req,res)=> {
+    res.render(__dirname + "/views/department.html")
+});
 
