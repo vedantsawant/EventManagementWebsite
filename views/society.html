@@ -30,6 +30,7 @@
 <body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
 
      <script>
+          
           var isnotcouncilmemeber = false;
           $(document).ready(function() {
                $.ajax({
@@ -45,13 +46,7 @@
                               }else{
                                    const user =xhr.responseJSON.user; 
                                    isnotcouncilmemeber = !user.societies;
-                                   var addevent = document.getElementById('addevent');
-                                   if(!isnotcouncilmemeber){
-                                        
-                                        addevent.style.display = "block";
-                                   }else{
-                                        addevent.style.display = "none";
-                                   }
+                                   
                                    
                               }
 
@@ -63,7 +58,77 @@
 					
 				}
 			});
+               $.ajax({
+				url: "http://localhost:3000/event/getall",
+				type: "GET",
+				cache: false,
+				success: function(output, status, xhr){
+					//var dataResult = JSON.parse(xhr);
+					if(xhr.status==200){
+                              const eventlist = xhr.responseJSON;
+						console.log(xhr.responseJSON)
+                              const container = document.getElementById('CSI-container');
+               eventlist.forEach((result, idx) => {
+                    // Create card element
+                    const card = document.createElement('div');
+                    card.classList = 'card-body';
+                    $('.my-form').on('submit', function () {
+                         alert('Form submitted!');
+                         return false;
+                    });
+                    // Construct card content
+                    const content = `
+                    <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images/society/csi-bootstrap.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 12 / 5 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 2 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">${result.eventname}</a></h3>
+                                                  <p>${result.description}</p>
+                                             </div>
+                                             
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images/society/csi-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <form class="my-form">
+                                                            <input type="hidden" name="eventid" value="sdfad">
+                                                            <input type="submit" name="submit" class="btn btn-primary" value="Register" id="butlogin">
+                                                       </form>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                    `;
+                    $('.owl-carousel').owlCarousel('add',content).owlCarousel('update');
+                    // Append newyly created card element to the container
+                    // container.innerHTML += content;
+                    });
                 
+                              
+
+					}
+					else if(xhr.status==400){
+						$("#error").show();
+						$('#error').html('logged out');
+					}
+					
+				}
+			});
+
+
+               
           });
           function logout()
           {
@@ -84,6 +149,9 @@
 				}
 			});
           }
+
+
+
         
      </script>
      <!-- PRE LOADER -->
@@ -192,7 +260,7 @@
                               <h2>CSI VESIT <small>Computer Society of India</small></h2>
                          </div>
 
-                         <div class="owl-carousel owl-theme owl-courses">
+                         <div class="owl-carousel owl-theme owl-courses" id = "CSI-container">
                               <div class="col-md-4 col-sm-4">
                                    <div class="item">
                                         <div class="courses-thumb">
@@ -210,13 +278,17 @@
                                                   <h3><a href="#">Bootstrap Workshop</a></h3>
                                                   <p>Learn Bootstrap in detail.</p>
                                              </div>
-
+                                             
                                              <div class="courses-info">
                                                   <div class="courses-author">
                                                        <img src="images\society\csi-vesit.png" class="img-responsive" alt="">
                                                   </div>
                                                   <div class="courses-price free">
-                                                       <a href="#"><span>Register</span></a>
+                                                       <form action="" method="post">
+                                                            <input type="hidden" name="eventid" value="sdfad">
+                                                            <input type="button" name="save" class="btn btn-primary" value="Register" id="butlogin">
+                                                       </form>
+                                                       
                                                   </div>
                                              </div>
                                         </div>
@@ -253,98 +325,10 @@
                                    </div>
                               </div>
 
-                              <div class="col-md-4 col-sm-4">
-                                   <div class="item">
-                                        <div class="courses-thumb">
-                                             <div class="courses-top">
-                                                  <div class="courses-image">
-                                                       <img src="images\society\csi-ml.jpeg" class="card-image img-responsive" alt="">
-                                                  </div>
-                                                  <div class="courses-date">
-                                                       <span><i class="fa fa-calendar"></i> 15 / 4 / 2021</span>
-                                                       <span><i class="fa fa-clock-o"></i> 6 Hours</span>
-                                                  </div>
-                                             </div>
-
-                                             <div class="courses-detail">
-                                                  <h3><a href="#">Machine Learning Workshop</a></h3>
-                                                  <p>Learn the basics of Machine Learning.</p>
-                                             </div>
-
-                                             <div class="courses-info">
-                                                  <div class="courses-author">
-                                                       <img src="images\society\csi-vesit.png" class="img-responsive" alt="">
-                                                  </div>
-                                                  <div class="courses-price free">
-                                                       <a href="#"><span>Register</span></a>
-                                                  </div>
-                                             </div>
-                                        </div>
-                                   </div>
-                              </div>
-
-                              <div class="col-md-4 col-sm-4">
-                                   <div class="item">
-                                        <div class="courses-thumb">
-                                             <div class="courses-top">
-                                                  <div class="courses-image">
-                                                       <img src="images\society\csi-node.jpeg" class="card-image img-responsive" alt="">
-                                                  </div>
-                                                  <div class="courses-date">
-                                                       <span><i class="fa fa-calendar"></i> 10 / 4 / 2021</span>
-                                                       <span><i class="fa fa-clock-o"></i> 8 Hours</span>
-                                                  </div>
-                                             </div>
-
-                                             <div class="courses-detail">
-                                                  <h3><a href="#">Node JS Workshop</a></h3>
-                                                  <p>Learn the basics of Javascript and Node JS.</p>
-                                             </div>
-
-                                             <div class="courses-info">
-                                                  <div class="courses-author">
-                                                       <img src="images\society\csi-vesit.png" class="img-responsive" alt="">
-                                                  </div>
-                                                  <div class="courses-price free">
-                                                       <a href="#"><span>Register</span></a>
-                                                  </div>
-                                             </div>
-                                        </div>
-                                   </div>
-                              </div>
-
-                              <div class="col-md-4 col-sm-4">
-                                   <div class="item">
-                                        <div class="courses-thumb">
-                                             <div class="courses-top">
-                                                  <div class="courses-image">
-                                                       <img src="images\society\csi-python.jpeg" class="card-image img-responsive" alt="">
-                                                  </div>
-                                                  <div class="courses-date">
-                                                       <span><i class="fa fa-calendar"></i> 5 / 10 / 2021</span>
-                                                       <span><i class="fa fa-clock-o"></i> 10 Hours</span>
-                                                  </div>
-                                             </div>
-
-                                             <div class="courses-detail">
-                                                  <h3><a href="#">Python Workshop</a></h3>
-                                                  <p>Learn the basics of python and data analytics.</p>
-                                             </div>
-
-                                             <div class="courses-info">
-                                                  <div class="courses-author">
-                                                       <img src="images\society\csi-vesit.png" class="img-responsive" alt="">
-                                                  </div>
-                                                  <div class="courses-price free">
-                                                       <a href="#"><span>Register</span></a>
-                                                  </div>
-                                             </div>
-                                        </div>
-                                   </div>
-                              </div>
+                              
 
                          </div>
-
+                    </div>
                </div>
                </section>
                <hr style="   border: 0;height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1);border-bottom: 1px solid rgba(255, 255, 255, 0.3);"></hr>
