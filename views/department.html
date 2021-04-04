@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 
-     <title>Departments</title>
-     
+     <title>Societies</title>
+
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
      <meta name="description" content="">
@@ -25,544 +25,922 @@
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="css/index.css">
-
 </head>
 
-<body>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
 
-    <!-- FEATURE -->
-    <section id="feature" style="padding-bottom:0%; padding-left: 4%;">
-        <div class="container">
+     <script>
+          var isnotcouncilmemeber = false;
+          $(document).ready(function() {
+               $.ajax({
+				url: "http://localhost:3000/auth/tokenIsValid",
+				type: "GET",
+				cache: false,
+				success: function(output, status, xhr){
+					//var dataResult = JSON.parse(xhr);
+					if(xhr.status==200){
+						
+                              if(!xhr.responseJSON.user){
+                                   location.href = "http://localhost:3000/login";	
+                              }else{
+                                   const user =xhr.responseJSON.user; 
+                                   isnotcouncilmemeber = !user.societies;
+                                   var addevent = document.getElementById('addevent');
+                                   if(!isnotcouncilmemeber){
+                                        
+                                        addevent.style.display = "block";
+                                   }else{
+                                        addevent.style.display = "none";
+                                   }
+                                   
+                              }
 
-             <!-- Names of Student Bodies - Councils-->
-             <div class="row">
+					}
+					else if(xhr.status==400){
+						$("#error").show();
+						$('#error').html('logged out');
+					}
+					
+				}
+			});
+                
+          });
+          function logout()
+          {
+               $.ajax({
+				url: "http://localhost:3000/auth/logout",
+				type: "GET",
+				cache: false,
+				success: function(output, status, xhr){
+					//var dataResult = JSON.parse(dataResult);
+					if(xhr.status==200){
+						location.href = "http://localhost:3000/login";						
+					}
+					else if(xhr.status==400){
+						$("#error").show();
+						$('#error').html('failed');
+					}
+					
+				}
+			});
+          }
+        
+     </script>
+     <!-- PRE LOADER -->
+     <section class="preloader">
+          <div class="spinner">
 
-                  <div style="margin-right: 3%;" class="col-md-2 col-sm-3">
-                       <div class="card">
-                            <a href="#etrx">
-                                 <img src="images\teachers\etrx-vesit.png" alt="sort" >
-                                 <h4 style="padding-left: 37px;">Electronics</h4>
+               <span class="spinner-rotate"></span>
+               
+          </div>
+     </section>
+
+
+     <!-- MENU -->
+     <section class="navbar custom-navbar navbar-fixed-top" role="navigation">
+          <div class="container">
+
+               <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                    </button>
+
+                    <!-- lOGO TEXT HERE -->
+                    <a href="#" class="navbar-brand">DASHBOARD</a>
+               </div>
+
+               <!-- MENU LINKS -->
+               <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-nav-first">
+                         <li><a href="index.html" class="smoothScroll">Home</a></li>
+                         <li><a href="index.html" class="smoothScroll">About</a></li>
+                         <li><a href="department.html" class="smoothScroll">Department</a></li>
+                         <li><a href="society.html" class="smoothScroll">Society</a></li>
+                         <li><a href="councils.html" class="smoothScroll">Councils</a></li>
+                         <li><a href="index.html" class="smoothScroll">Contact</a></li>
+                         <li><a href="event-form.html" class="smoothScroll" id="addevent">Add Events</a></li>
+                         <li><a href="" class="smoothScroll" onClick="logout();">Logout</a></li>
+                         
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                         <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+                    </ul>
+               </div>
+
+          </div>
+     </section>
+   
+     <!-- FEATURE -->
+     <section id="feature" style="padding-bottom:0%; align-content: center;">
+          <div class="container" style="align-content: center;">
+
+               <!-- Names of Student Bodies - Societies-->
+               <div class="row">
+
+                        <div style="margin-right: 3%;" class="col-md-2 col-sm-3">
+                            <div class="card">
+                                <a href="#etrx">
+                                    <img src="images\teachers\etrx-vesit.png" alt="sort" >
+                                    <h4 style="padding-left: 37px;">Electronics</h4>
+                                </a>
+                            </div>
+                    </div>
+                    <div style="margin-right: 3%;" class="col-md-2 col-sm-3">
+                        <div >
+                            <a href="#comps">
+                                <img src="images\teachers\cmpn-vesit.png" alt="cult" >
+                                <h4 style="padding-left: 42px;">Computers</h4>
                             </a>
-                       </div>
-                  </div>
-                  <div style="margin-right: 3%;" class="col-md-2 col-sm-3">
-                      <div >
-                       <a href="#comps">
-                            <img src="images\teachers\cmpn-vesit.png" alt="cult" >
-                            <h4 style="padding-left: 42px;">Computers</h4>
-                       </a>
-                      </div>
-                 </div>
+                        </div>
+                    </div>
 
-                 <div style="margin-right: 3%;" class="col-md-2 col-sm-3">
-                      <div class="card">
-                       <a href="#inst">
-                            <img style="padding-top:16px;" src="images\teachers\inst-vesit.png" alt="music" >
-                            <h4 style="padding-top:13px; padding-left: 7px;" class="">Instrumentation</h4>
-                       </a>
-                      </div>
-                  </div>
+                    <div style="margin-right: 3%;" class="col-md-2 col-sm-3">
+                        <div class="card">
+                            <a href="#inst">
+                                <img style="padding-top:16px;" src="images\teachers\inst-vesit.png" alt="music" >
+                                <h4 style="padding-top:13px; padding-left: 7px;" class="">Instrumentation</h4>
+                            </a>
+                        </div>
+                    </div>
 
-                  <div style="margin-right: 3%;" class="col-md-2 col-sm-3">
-                      <div class="card">
-                           <a href="#extc">
-                            <img style="padding-top:5px;" src="images\teachers\extc-vesit.png" alt="sports" >
-                            <h4 style="padding-left: 17px;">Electronics and Telecomunications</h4>
-                           </a>
-                      </div>
-                 </div>
-                 <div class="col-md-2 col-sm-3">
-                    <div class="card">
-                         <a href="#inft">
-                          <img style="padding-top:22px;" src="images\teachers\inft-vesit.png" alt="sports" >
-                          <h4 style="padding-left: 25px;">Information Technology</h4>
-                         </a>
+                    <div style="margin-right: 3%;" class="col-md-2 col-sm-3">
+                        <div class="card">
+                                <a href="#extc">
+                                <img style="padding-top:5px;" src="images\teachers\extc-vesit.png" alt="sports" >
+                                <h4 style="padding-left: 17px;">Electronics and Telecomunications</h4>
+                                </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-3">
+                        <div class="card">
+                            <a href="#inft">
+                            <img style="padding-top:22px;" src="images\teachers\inft-vesit.png" alt="sports" >
+                            <h4 style="padding-left: 25px;">Information Technology</h4>
+                            </a>
+                        </div>
                     </div>
                </div>
-             </div>
-        </div>
-   </section>
+          </div>
+     </section>
 
+     <!-- Courses -->
+     <section id="courses">
+          <div class="container" style="padding: 0em;">
+               <hr style="   border: 0;height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1);border-bottom: 1px solid rgba(255, 255, 255, 0.3);"></hr>
 
-     <!-- TEAM -->
-     <section id="team">
-        <div class="container s">
+               <!-- CSI -->
+               <section id="csi">
+               <div class="row">
 
-            <section id="etrx">
-             <div class="row square">
+                    <div class="col-md-12 col-sm-12">
+                         <div class="section-title">
+                              <h2>CSI VESIT <small>Computer Society of India</small></h2>
+                         </div>
 
-                  <div class="col-md-12 col-sm-12">
-                       <div class="section-title">
-                            <h2>Electronics Engineering</h2>
-                       </div>
-                  </div>
+                         <div class="owl-carousel owl-theme owl-courses">
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\csi-bootstrap.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 12 / 5 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 2 Hours</span>
+                                                  </div>
+                                             </div>
 
-                  <div class="col-md-3 col-sm-6">
-                       <div class="team-thumb">
-                            <div class="team-image">
-                                 <img src="images/teachers/author-image1.jpg" class="img-responsive" alt="">
-                            </div>
-                            <div class="team-info">
-                                 <h3>Mark Wilson</h3>
-                                 <span>Head of Department</span>
-                            </div>
-                            <ul class="social-icon">
-                                 <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
-                                 <li><a href="#" class="fa fa-twitter"></a></li>
-                                 <li><a href="#" class="fa fa-instagram"></a></li>
-                            </ul>
-                       </div>
-                  </div>
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Bootstrap Workshop</a></h3>
+                                                  <p>Learn Bootstrap in detail.</p>
+                                             </div>
 
-                  <div class="col-md-3 col-sm-6">
-                       <div class="team-thumb">
-                            <div class="team-image">
-                                 <img src="images/teachers/author-image2.jpg" class="img-responsive" alt="">
-                            </div>
-                            <div class="team-info">
-                                 <h3>Catherine</h3>
-                                 <span>Deputy Head of Department</span>
-                            </div>
-                            <ul class="social-icon">
-                                 <li><a href="#" class="fa fa-google"></a></li>
-                                 <li><a href="#" class="fa fa-instagram"></a></li>
-                            </ul>
-                       </div>
-                  </div>
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\csi-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
 
-                  <div class="col-md-3 col-sm-6">
-                       <div class="team-thumb">
-                            <div class="team-image">
-                                 <img src="images/teachers/author-image3.jpg" class="img-responsive" alt="">
-                            </div>
-                            <div class="team-info">
-                                 <h3>Jessie Ca</h3>
-                                 <span>Assocatiate Professor</span>
-                            </div>
-                            <ul class="social-icon">
-                                 <li><a href="#" class="fa fa-twitter"></a></li>
-                                 <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                 <li><a href="#" class="fa fa-linkedin"></a></li>
-                            </ul>
-                       </div>
-                  </div>
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\csi-github.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 20 / 5 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 4 Hours</span>
+                                                  </div>
+                                             </div>
 
-                  <div class="col-md-3 col-sm-6">
-                       <div class="team-thumb">
-                            <div class="team-image">
-                                 <img src="images/teachers/author-image4.jpg" class="img-responsive" alt="">
-                            </div>
-                            <div class="team-info">
-                                 <h3>Andrew Berti</h3>
-                                 <span>Assistant Professor</span>
-                            </div>
-                            <ul class="social-icon">
-                                 <li><a href="#" class="fa fa-twitter"></a></li>
-                                 <li><a href="#" class="fa fa-google"></a></li>
-                            </ul>
-                       </div>
-                  </div>
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Github Workshop</a></h3>
+                                                  <p>Learn git commands and basics of Github.</p>
+                                             </div>
 
-             </div>
-            </section>
-            <hr style="   border: 0;height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1);border-bottom: 1px solid rgba(255, 255, 255, 0.3);"></hr>
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\csi-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
 
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\csi-ml.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 15 / 4 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 6 Hours</span>
+                                                  </div>
+                                             </div>
 
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Machine Learning Workshop</a></h3>
+                                                  <p>Learn the basics of Machine Learning.</p>
+                                             </div>
 
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\csi-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
 
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\csi-node.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 10 / 4 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 8 Hours</span>
+                                                  </div>
+                                             </div>
 
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Node JS Workshop</a></h3>
+                                                  <p>Learn the basics of Javascript and Node JS.</p>
+                                             </div>
 
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\csi-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
 
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\csi-python.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 5 / 10 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 10 Hours</span>
+                                                  </div>
+                                             </div>
 
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Python Workshop</a></h3>
+                                                  <p>Learn the basics of python and data analytics.</p>
+                                             </div>
 
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\csi-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
 
+                         </div>
 
-
-
-
-
-
-            <section id="comps">
-                <div class="row square">
-   
-                     <div class="col-md-12 col-sm-12">
-                          <div class="section-title">
-                               <h2>Computer Engineering</h2>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image1.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Mark Wilson</h3>
-                                    <span>Head of Department</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
-                                    <li><a href="#" class="fa fa-twitter"></a></li>
-                                    <li><a href="#" class="fa fa-instagram"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image2.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Catherine</h3>
-                                    <span>Deputy Head of Department</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-google"></a></li>
-                                    <li><a href="#" class="fa fa-instagram"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image3.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Jessie Ca</h3>
-                                    <span>Assocatiate Professor</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-twitter"></a></li>
-                                    <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                    <li><a href="#" class="fa fa-linkedin"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image4.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Andrew Berti</h3>
-                                    <span>Assistant Professor</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-twitter"></a></li>
-                                    <li><a href="#" class="fa fa-google"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                </div>
+               </div>
                </section>
                <hr style="   border: 0;height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1);border-bottom: 1px solid rgba(255, 255, 255, 0.3);"></hr>
 
+               <!-- IEEE -->
+               <section id="ieee">
+               <div class="row" style="padding-top: 60px;"> 
+
+                    <div class="col-md-12 col-sm-12" >
+                         <div class="section-title">
+                              <h2>IEEE VESIT <small>Institute of Electrical and Electronics Engineers</small></h2>
+                         </div>
+
+                         <div class="owl-carousel owl-theme owl-courses">
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\ieee-cloud.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 12 / 5 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 2 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Cloud Computing Workshop</a></h3>
+                                                  <p>Learn the basics of cloud computing.</p>
+                                             </div>
+
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\ieee-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\ieee-cyber.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 20 / 5 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 4 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Cyber Security Workshop</a></h3>
+                                                  <p>Learn Cyber Security (in collab with IBS).</p>
+                                             </div>
+
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\ieee-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\ieee-native.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 15 / 4 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 6 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">React Native Workshop</a></h3>
+                                                  <p>Learn the basics of react native.</p>
+                                             </div>
+
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\ieee-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\ieee-android.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 10 / 4 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 8 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Android Workshop</a></h3>
+                                                  <p>Learn android along with Google's Firebase.</p>
+                                             </div>
+
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\ieee-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>s
+                              </div>
+
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\ieee-ui.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 5 / 10 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 10 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">UI/UX Workshop</a></h3>
+                                                  <p>Learn UI and UX Design.</p>
+                                             </div>
+
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\ieee-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                         </div>
+
+               </div>
+          </section>
+          <hr style="   border: 0;height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1);border-bottom: 1px solid rgba(255, 255, 255, 0.3);"></hr>
+
+
+               <!-- ISTE -->
+
+               <section id="iste">
+               <div class="row" style="padding-top: 60px;">
+
+                    <div class="col-md-12 col-sm-12">
+                         <div class="section-title">
+                              <h2>ISTE VESIT <small>Indian Society for Technical Education</small></h2>
+                         </div>
+
+                         <div class="owl-carousel owl-theme owl-courses">
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\iste-bigdata.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 12 / 5 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 2 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Big Data Workshop</a></h3>
+                                                  <p>Learn the basics of big data.</p>
+                                             </div>
+
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\iste-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\iste-flutter.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 20 / 5 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 4 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Flutter Workshop</a></h3>
+                                                  <p>Learn how to code with Flutter.</p>
+                                             </div>
+
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\iste-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\iste-laravel.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 15 / 4 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 6 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Laravel Workshop</a></h3>
+                                                  <p>Learn the basics of Laravel.</p>
+                                             </div>
+
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\iste-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\iste-web.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 10 / 4 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 8 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Web Scraping Workshop</a></h3>
+                                                  <p>Learn the basics of Web Scraping.</p>
+                                             </div>
+
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\iste-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\iste-machinera.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 5 / 10 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 10 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Machinera</a></h3>
+                                                  <p>Learn in detail about Artificial Intelligence.</p>
+                                             </div>
+
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\iste-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                         </div>
+               </div>
+          </section>
+          <hr style="   border: 0;height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1);border-bottom: 1px solid rgba(255, 255, 255, 0.3);"></hr>
+
+
+
+
+               <!-- ISA -->
+               <section id="isa">
+               <div class="row" style="padding-top: 60px;">
+
+                    <div class="col-md-12 col-sm-12">
+                         <div class="section-title">
+                              <h2>ISA VESIT <small>Industry Standard Architecture</small></h2>
+                         </div>
+
+                         <div class="owl-carousel owl-theme owl-courses">
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\isa-animation.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 12 / 5 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 2 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">3D Animation Workshop</a></h3>
+                                                  <p>Learn the basics of three JS.</p>
+                                             </div>
+
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\isa-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\isa-bluetooth.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 20 / 5 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 4 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Bluetooth Communication</a></h3>
+                                                  <p>Learn in detail about bluetooth.</p>
+                                             </div>
+
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\isa-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\isa-image.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 15 / 4 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 6 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Image Processing Workshop</a></h3>
+                                                  <p>Learn the basics of image processing.</p>
+                                             </div>
+
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\isa-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\isa-iot.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 10 / 4 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 8 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Advanced IOT Workshop</a></h3>
+                                                  <p>Learn the core concepts of IOT.</p>
+                                             </div>
+
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\isa-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-4 col-sm-4">
+                                   <div class="item">
+                                        <div class="courses-thumb">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="images\society\isa-wsn.jpeg" class="card-image img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span><i class="fa fa-calendar"></i> 5 / 10 / 2021</span>
+                                                       <span><i class="fa fa-clock-o"></i> 10 Hours</span>
+                                                  </div>
+                                             </div>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">WSN Workshop</a></h3>
+                                                  <p>Learn the concepts of WSN.</p>
+                                             </div>
+
+                                             <div class="courses-info">
+                                                  <div class="courses-author">
+                                                       <img src="images\society\isa-vesit.png" class="img-responsive" alt="">
+                                                  </div>
+                                                  <div class="courses-price free">
+                                                       <a href="#"><span>Register</span></a>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                         </div>
+
+               </div>
+          </section>
+
+
+          </div>
+     </section>
+
+
+     
+
+     <!-- FOOTER -->
+     <footer id="footer">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-4 col-sm-6">
+                         <div class="footer-info">
+                              <div class="section-title">
+                                   <h2>Team</h2>
+                              </div>
+                              <address>
+                                   <p>Gaurav Patil<br>Shivani Shenai<br>Vedant Sawant</p>
+                              </address>
+
+                              <ul class="social-icon">
+                                   <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
+                                   <li><a href="#" class="fa fa-twitter"></a></li>
+                                   <li><a href="#" class="fa fa-instagram"></a></li>
+                              </ul>
+
+                              <div class="copyright-text"> 
+                                   <p>Event Mangement Website</p>
+                                   
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                         <div class="footer-info">
+                              <div class="section-title">
+                                   <h2>Contact Info</h2>
+                              </div>
+                              <address>
+                                   <p><a href="mailto:2018.gaurav.patil@ves.ac.in">2018.gaurav.patil@ves.ac.in</a></p>
+                                   <p><a href="mailto:2018.shivani.shenai@ves.ac.in">2018.shivani.shenai@ves.ac.in</a></p>
+                                   <p><a href="mailto:2018.vedant.sawant@ves.ac.in">2018.vedant.sawant@ves.ac.in</a></p>
+                              </address>
+
+                              <div class="footer_menu">
+                                   <h2>Quick Links</h2>
+                                   <ul>
+                                        <li><a href="#">Forms</a></li>
+                                        <li><a href="#">FAQ</a></li>
+                                   </ul>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                         <div class="footer-info newsletter-form">
+                              <div class="section-title">
+                                   <h2>Newsletter Signup</h2>
+                              </div>
+                              <div>
+                                   <div class="form-group">
+                                        <form action="#" method="get">
+                                             <input type="email" class="form-control" placeholder="Enter your email" name="email" id="email" required="">
+                                             <input type="submit" class="form-control" name="submit" id="form-submit" value="Send me">
+                                        </form>
+                                        <span>Signup for monthly newsletter.</span>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+                    
+               </div>
+          </div>
+     </footer>
+
+
+     <!-- SCRIPTS -->
+     <script src="js/jquery.js"></script>
+     <script src="js/bootstrap.min.js"></script>
+     <script src="js/owl.carousel.min.js"></script>
+     <script src="js/smoothscroll.js"></script>
+     <script src="js/custom.js"></script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-               <section id="inst">
-                <div class="row square">
-   
-                     <div class="col-md-12 col-sm-12">
-                          <div class="section-title">
-                               <h2>Instrumentation Engineering</h2>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image1.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Mark Wilson</h3>
-                                    <span>Head of Department</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
-                                    <li><a href="#" class="fa fa-twitter"></a></li>
-                                    <li><a href="#" class="fa fa-instagram"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image2.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Catherine</h3>
-                                    <span>Deputy Head of Department</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-google"></a></li>
-                                    <li><a href="#" class="fa fa-instagram"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image3.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Jessie Ca</h3>
-                                    <span>Assocatiate Professor</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-twitter"></a></li>
-                                    <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                    <li><a href="#" class="fa fa-linkedin"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image4.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Andrew Berti</h3>
-                                    <span>Assistant Professor</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-twitter"></a></li>
-                                    <li><a href="#" class="fa fa-google"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                </div>
-               </section>
-               <hr style="   border: 0;height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1);border-bottom: 1px solid rgba(255, 255, 255, 0.3);"></hr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-               <section id="extc">
-                <div class="row square">
-   
-                     <div class="col-md-12 col-sm-12">
-                          <div class="section-title">
-                               <h2>Electronics and Telecomunications Engineering</h2>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image1.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Mark Wilson</h3>
-                                    <span>Head of Department</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
-                                    <li><a href="#" class="fa fa-twitter"></a></li>
-                                    <li><a href="#" class="fa fa-instagram"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image2.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Catherine</h3>
-                                    <span>Deputy Head of Department</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-google"></a></li>
-                                    <li><a href="#" class="fa fa-instagram"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image3.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Jessie Ca</h3>
-                                    <span>Assocatiate Professor</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-twitter"></a></li>
-                                    <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                    <li><a href="#" class="fa fa-linkedin"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image4.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Andrew Berti</h3>
-                                    <span>Assistant Professor</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-twitter"></a></li>
-                                    <li><a href="#" class="fa fa-google"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                </div>
-               </section>
-               <hr style="   border: 0;height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1);border-bottom: 1px solid rgba(255, 255, 255, 0.3);"></hr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-               <section id="inft">
-                <div class="row square">
-   
-                     <div class="col-md-12 col-sm-12">
-                          <div class="section-title">
-                               <h2>Information Technology</h2>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image1.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Mark Wilson</h3>
-                                    <span>Head of Department</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
-                                    <li><a href="#" class="fa fa-twitter"></a></li>
-                                    <li><a href="#" class="fa fa-instagram"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image2.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Catherine</h3>
-                                    <span>Deputy Head of Department</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-google"></a></li>
-                                    <li><a href="#" class="fa fa-instagram"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image3.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Jessie Ca</h3>
-                                    <span>Assocatiate Professor</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-twitter"></a></li>
-                                    <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                    <li><a href="#" class="fa fa-linkedin"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                     <div class="col-md-3 col-sm-6">
-                          <div class="team-thumb">
-                               <div class="team-image">
-                                    <img src="images/teachers/author-image4.jpg" class="img-responsive" alt="">
-                               </div>
-                               <div class="team-info">
-                                    <h3>Andrew Berti</h3>
-                                    <span>Assistant Professor</span>
-                               </div>
-                               <ul class="social-icon">
-                                    <li><a href="#" class="fa fa-twitter"></a></li>
-                                    <li><a href="#" class="fa fa-google"></a></li>
-                               </ul>
-                          </div>
-                     </div>
-   
-                </div>
-               </section>
-               <hr style="   border: 0;height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1);border-bottom: 1px solid rgba(255, 255, 255, 0.3);"></hr>
-        </div>
-   </section>
 </body>
 </html>
