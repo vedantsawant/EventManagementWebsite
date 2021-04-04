@@ -46,6 +46,12 @@
                               }else{
                                    const user =xhr.responseJSON.user; 
                                    isnotcouncilmemeber = !user.societies;
+                                   if(!isnotcouncilmemeber){
+                                        
+                                        addevent.style.display = "block";
+                                   }else{
+                                        addevent.style.display = "none";
+                                   }
                                    
                                    
                               }
