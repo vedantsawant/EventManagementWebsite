@@ -235,6 +235,16 @@
 <!-- End of Footer -->
 <!-- JS Scripts -->
 <script type="text/javascript" src="project.js"></script>
+<script> 
+     $.ajax({
+               url: "http://localhost:3000/auth/tokenIsValid",
+               type: "GET",
+               cache: false,
+               success: function(output, status, xhr){
+                    document.getElementById("profile-name").innerHTML = xhr.responseJSON.user.first_name;
+               }
+     });
+</script>
 
 </body>
 </html>
