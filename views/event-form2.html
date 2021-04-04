@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Booking Form 2</title>
+	<title>Booking Form</title>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600&display=swap&subset=latin-ext" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -15,7 +15,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
-
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 </head>
 
@@ -116,8 +116,8 @@
 
 						       <div class="col-sm-6">
 									<div class="form-group">
-										<span class="form-label">New Field</span>
-								        <input class="form-control">
+										<span class="form-label">Upload Poster</span>
+								        <input class="form-control" name="poster" id="poster" type="file" >
 										
 									</div>
 								</div>
@@ -142,14 +142,31 @@
 			$(document).ready(function() {
 				$('#regevent').on('click', function() {
 				$("#regevent").attr("disabled", "disabled");
+				
 
+				var fd = new FormData();	
+				
 				var eventname = $('#event-name').val();
+				fd.append("eventname",eventname);
+
 				var description = $('#description').val();
+				fd.append("description",description);
+				
 				var sbodyid = $('#sbody').val();
+				fd.append("sbodyid",sbodyid);
+				
 				var eventdate = $('#event-date').val();
+				fd.append("eventdate",eventdate);
+				
 				var venue = $('#venue').val();
+				fd.append("venue",venue);
+				
 				var postername = eventname+"_" + sbodyid + "_"+Date.now();
+				fd.append("postername",postername);
+				
 				var poster = document.getElementById("poster").files[0];
+				fd.append("imageData",document.getElementById('poster').files[0]);
+				
 				if(eventname!="" && description!="" && sbody!="" && eventdate!="" && venue!=""){
 					console.log(eventname);
 					console.log(description);
@@ -158,38 +175,46 @@
 					console.log(venue);
 					console.log(postername);
 					console.log(poster);
-					$.ajax({
-						url: "http://localhost:3000/event/add",
-						type: "POST",
-						
-						data: JSON.stringify({
-							"eventname":eventname,
-							"description":description,
-							"sbodyid":sbodyid,
-							"eventdate":eventdate,
-							"venue": venue,
-							"postername": postername,
-							"poster": poster
-						}),
-						contentType: "application/json; charset=utf-8",
-						cache: false,
-						processData: false,
-						success: function(output, status, xhr){
-							//var dataResult = JSON.parse(dataResult);
-							//console.log(xhr.status);
-							if(xhr.status==200){
-								$("#butsave").removeAttr("disabled");
-								$('#register_form').find('input:text').val('');
-								$("#success").show();
-								$('#success').html('Registration successful !'); 						
-							}
-							else if(xhr.status==400){
-								$("#error").show();
-								$('#error').html('Email ID already exists !');
-							}
-							
-						}
+
+					axios.post('http://localhost:3000/event/add', fd)
+					.then(function (response) {
+						console.log(response);
+					})
+					.catch(function (error) {
+						console.log(error);
 					});
+					// $.ajax({
+					// 	url: "http://localhost:3000/event/add",
+					// 	type: "POST",
+						
+					// 	data: JSON.stringify({
+					// 		"eventname":eventname,
+					// 		"description":description,
+					// 		"sbodyid":sbodyid,
+					// 		"eventdate":eventdate,
+					// 		"venue": venue,
+					// 		"postername": postername,
+					// 		"poster": poster
+					// 	}),
+					// 	contentType: "application/json; charset=utf-8",
+					// 	cache: false,
+					// 	processData: false,
+					// 	success: function(output, status, xhr){
+					// 		//var dataResult = JSON.parse(dataResult);
+					// 		//console.log(xhr.status);
+					// 		if(xhr.status==200){
+					// 			$("#butsave").removeAttr("disabled");
+					// 			$('#register_form').find('input:text').val('');
+					// 			$("#success").show();
+					// 			$('#success').html('Registration successful !'); 						
+					// 		}
+					// 		else if(xhr.status==400){
+					// 			$("#error").show();
+					// 			$('#error').html('Email ID already exists !');
+					// 		}
+							
+					// 	}
+					// });
 				}
 				else{
 					alert('Please fill all the fields !');

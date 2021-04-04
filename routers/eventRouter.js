@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
         cb(null,'./public/eventposters/');
     },
     filename: function(req,file,cb){
-        cb(null,Date.now()+file.originalname);
+        cb(null,file.originalname);
     }
 });
 
@@ -23,21 +23,20 @@ const fileFilter = (req,file,cb)=>{
 }
 
 const upload = multer({
-    storage,
-    limits:{
-        fileSize:1024*1024*5
-    },
-    fileFilter:fileFilter
+    storage
 });
 
 
-router.route("/add").post(upload.single('poster'),async (req,res,next)=>{
+router.route("/add").post(async (req,res,next)=>{
 
     try {
-        const {eventname, description,sbodyid,eventdate,venue,postername,poster} = req.body;
+        const {eventname, description,sbodyid,eventdate,venue} = req.body;
         
         const token = req.cookies.token;
-        
+        // const postername=req.body.postername;
+        // var imageData = req.file.path;
+        // imageData = imageData.replace(/\\/g,"/");
+        // imageData = imageData.slice(7);
         
         
         if(!token) return res.json("no token");
@@ -72,7 +71,7 @@ router.route("/add").post(upload.single('poster'),async (req,res,next)=>{
         if(!sbodyid || !description || !eventname ||! eventdate ||! venue)
             return res.status(400).json({errorMessage:"Please Enter all Required fields"});
         const newEvent = new Event({
-            sbodyid, eventdate,eventname,description,venue,postername,poster
+            sbodyid, eventdate,eventname,description,venue
         });
         const savedEvent = await newEvent.save();
         res.status(200).send("done");

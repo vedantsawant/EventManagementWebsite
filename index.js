@@ -56,6 +56,9 @@ app.get("/home", (req,res)=>{
 app.get("/society", (req,res)=> {
     res.render(__dirname + "/views/society.html")
 });
+app.get("/regevent", (req,res)=> {
+    res.render(__dirname + "/views/event-form.html")
+});
 // app.get("/councils", (req,res)=> {
 //     res.render(__dirname + "/views/councils.html")
 // });

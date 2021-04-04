@@ -16,8 +16,8 @@ const eventSchema = new mongoose.Schema({
     }],
     venue:{type: String, required: true},
     approved: {type: Number, default: 0},
-    postername:{type:String,default:"none",required:true},
-    poster: {type:String,required:true},
+    // postername:{type:String,default:"none",required:true},
+    // poster: {type:String,required:true},
 });
 
 const Event = mongoose.model("event",eventSchema);
